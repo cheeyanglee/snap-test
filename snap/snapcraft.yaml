@@ -1,9 +1,9 @@
-name: vainfo 
+name: libva-test
 base: core20 
 version: '0.1' 
-summary: snap package including libdrm, libva and libva-utils
+summary: snap package including libdrm and libva 
 description: |
-  single snap package including libdrm and libva as library and libva-utils as application.
+  single snap package including libdrm and libva as library
 
 grade: devel # must be 'stable' to release into candidate/stable channels
 confinement: devmode # use 'strict' once you have the right plugs and slots
@@ -74,27 +74,4 @@ parts:
         "snap/libva/current/usr/lib/x86_64-linux-gnu/dri/*.so*": /usr/lib/x86_64-linux-gnu/dri/
         "snap/libva/current/usr/include/*.h": /usr/include/
         "snap/libva/current/usr/share/libdrm/*.ids": usr/share/libdrm/
-
-  vainfo:
-    after: [ libva ]
-    source: https://github.com/intel/libva-utils/archive/refs/tags/2.10.0.tar.gz
-    plugin: meson
-    meson-parameters:
-      - --prefix=/usr
-    stage-packages:
-      - libwayland-client0
-      - libxext6
-      - libxfixes3
-
-    organize:
-      vainfo: usr/bin/
-      
-apps:
-  vainfo:
-    command: usr/bin/vainfo
-    environment: 
-      LIBVA_DRIVER_NAME: iHD
-      PATH: $SNAP/usr/local/bin:$PATH
-      LIBVA_DRIVERS_PATH: $SNAP/usr/lib/x86_64-linux-gnu/dri
-
 
